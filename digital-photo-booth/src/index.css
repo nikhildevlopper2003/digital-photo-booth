@@ -1,0 +1,86 @@
+/* Add these new styles to your existing index.css */
+@keyframes pulse {
+  from { transform: translate(-50%, -50%) scale(1); }
+  to { transform: translate(-50%, -50%) scale(1.1); }
+}
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;700&display=swap');
+
+
+.webcam-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.3);
+  z-index: 10;
+  border-radius: 12px;
+}
+
+.webcam-loading::after {
+  content: "Loading camera...";
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+.btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.countdown-animation {
+  animation: pulse 0.5s infinite alternate;
+}
+
+/* Enhance the capture button */
+.btn-capture {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-capture:active {
+  transform: scale(0.95);
+}
+
+.btn-capture::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: rgba(255,255,255,0.2);
+  transform: rotate(45deg);
+  transition: all 0.3s ease;
+}
+
+.btn-capture:active::after {
+  left: 100%;
+}
+
+/* Polaroid texture previews */
+.texture-preview {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.texture-preview:hover {
+  transform: scale(1.05);
+}
+
+.texture-preview.active {
+  border-color: #D9A299;
+  box-shadow: 0 0 0 3px rgba(217, 162, 153, 0.3);
+}
