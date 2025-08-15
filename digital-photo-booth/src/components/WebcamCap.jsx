@@ -3,9 +3,21 @@ import Webcam from 'react-webcam';
 
 const WebcamCap = () => {
   const [devices, setDevices] = useState([]);
+  const [constraints, setConstraints] = useState(null);
 
   const handleDevices = useCallback((mediaDevices) => {
-    setDevices(mediaDevices.filter(({ kind }) => kind === 'videoinput'));
+    const cams = mediaDevices.filter(({ kind }) => kind === 'videoinput');
+    setDevices(cams);
+
+    if (cams.length > 0) {
+      setConstraints({
+        deviceId: cams[0].deviceId, // front camera first
+        facingMode: 'user', // try front cam, fallback to back automatically
+        aspectRatio: 16 / 9,
+        width: { ideal: 1280 },
+        height: { ideal: 720 }
+      });
+    }
   }, []);
 
   useEffect(() => {
@@ -25,27 +37,25 @@ const WebcamCap = () => {
               }}
             >
               <div className="card-body text-center">
-                <div style={{
-                  width: '100%',
-                  aspectRatio: '16/9', // force frame shape
-                  overflow: 'hidden',
-                  borderRadius: '12px',
-                  position: 'relative'
-                }}>
-                  <Webcam
-                    audio={false}
-                    videoConstraints={{
-                      deviceId: device.deviceId,
-                      width: 1280,
-                      height: 720,
-                    }}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover' // crop instead of stretch
-                    }}
-                  />
-                </div>
+                <Webcam
+                  audio={false}
+                  playsInline
+                  muted
+                  videoConstraints={{
+                    deviceId: device.deviceId,
+                    facingMode: key === 0 ? 'user' : 'environment',
+                    aspectRatio: 16 / 9,
+                    width: { ideal: 1280 },
+                    height: { ideal: 720 }
+                  }}
+                  className="img-fluid rounded-3"
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    maxHeight: '300px',
+                    objectFit: 'cover'
+                  }}
+                />
                 <h5 className="card-title mt-3">
                   {device.label || `Camera ${key + 1}`}
                 </h5>
