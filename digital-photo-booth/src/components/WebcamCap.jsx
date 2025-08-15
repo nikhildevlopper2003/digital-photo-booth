@@ -25,19 +25,27 @@ const WebcamCap = () => {
               }}
             >
               <div className="card-body text-center">
-                <Webcam
-                  audio={false}
-                  videoConstraints={{
-                    deviceId: device.deviceId,
-                  }}
-                  className="img-fluid rounded-3"
-                  style={{
-                    width: '100%',
-                    height: 'auto',
-                    maxHeight: '300px',
-                    objectFit: 'cover'
-                  }}
-                />
+                <div style={{
+                  width: '100%',
+                  aspectRatio: '16/9', // force frame shape
+                  overflow: 'hidden',
+                  borderRadius: '12px',
+                  position: 'relative'
+                }}>
+                  <Webcam
+                    audio={false}
+                    videoConstraints={{
+                      deviceId: device.deviceId,
+                      width: 1280,
+                      height: 720,
+                    }}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover' // crop instead of stretch
+                    }}
+                  />
+                </div>
                 <h5 className="card-title mt-3">
                   {device.label || `Camera ${key + 1}`}
                 </h5>

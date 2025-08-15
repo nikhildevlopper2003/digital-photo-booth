@@ -5,7 +5,7 @@ import Filters from "./Filters";
 
 const videoConstraints = {
   width: 540,
-  facingMode: "environment",
+  facingMode: "user",
 };
 
 const palette = {
